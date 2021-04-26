@@ -9,7 +9,7 @@ import { ModalController} from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor() {
+  constructor(clevertap: CleverTap) {
     customElements.define('modal-page', class extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
@@ -59,6 +59,14 @@ export class HomePage {
 </ion-content>`;
       }
     });
+    function pushChargedEvent1()
+    {
+      clevertap.recordChargedEventWithDetailsAndItems({amount: 300, 'Charged ID': 1234}, [{
+        Category: 'Books',
+        Quantity: 1,
+        Title: 'Book Title'
+      }]).then(r => {});
+    }
   }
 
   presentModal()
@@ -106,11 +114,12 @@ export class HomePage {
     document.body.appendChild(alert);
     return alert.present();
   }
-  pushChargedEvent1(clevertap: CleverTap){
-    clevertap.recordChargedEventWithDetailsAndItems({amount: 300, 'Charged ID': 1234}, [{
+  /* cancelled pushChargedEvent
+  pushChargedEvent1(){
+    CleverTap.recordChargedEventWithDetailsAndItems({amount: 300, 'Charged ID': 1234}, [{
       Category: 'Books',
       Quantity: 1,
       Title: 'Book Title'
-    }]);
-  }
+    }]).then(r => {});
+  }*/
 }
