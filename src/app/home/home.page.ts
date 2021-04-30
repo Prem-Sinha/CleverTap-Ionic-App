@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CleverTap } from '@ionic-native/clevertap/ngx';
+import { ToastController } from '@ionic/angular';
 import { ModalController} from '@ionic/angular';
 
 @Component({
@@ -9,7 +10,7 @@ import { ModalController} from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(clevertap: CleverTap) {
+  constructor(public clevertap: CleverTap, public toastController: ToastController) {
     customElements.define('modal-page', class extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
@@ -59,15 +60,28 @@ export class HomePage {
 </ion-content>`;
       }
     });
-    function pushChargedEvent1()
-    {
-      clevertap.recordChargedEventWithDetailsAndItems({amount: 300, 'Charged ID': 1234}, [{
-        Category: 'Books',
-        Quantity: 1,
-        Title: 'Book Title'
-      }]).then(r => {});
-    }
+    clevertap.onUserLogin({Identity: 'android098768', custom: 122211}).then(() => this.presentToast('User Login'));
   }
+  pushChargedEvent1()
+  {
+    console.log('push charged event');
+    this.clevertap.recordChargedEventWithDetailsAndItems({amount: 300, 'Charged ID': 1234}, [{
+      Category: 'Books',
+      Quantity: 1,
+      Title: 'Book Title'
+    }]);
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000
+    });
+    await toast.present();
+    const { role } = await toast.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  }
+
 
   presentModal()
   {

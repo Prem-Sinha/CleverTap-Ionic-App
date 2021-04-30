@@ -84,7 +84,7 @@ export class AppComponent {
       clevertap.eventGetDetails('noevent').then((res) => {
         console.log(JSON.stringify(res));
       });
-      clevertap.onUserLogin({Identity: 'android098768', custom: 122211});
+      // clevertap.onUserLogin({Identity: 'android098768', custom: 122211});
       clevertap.profileSet({Identity: 'a12345678', custom12: 1.311});
       clevertap.profileGetProperty('Identity').then((val) => {
         console.log('Identity profile value is ' + val);
