@@ -149,7 +149,8 @@ export class HomePage {
   recordEventWithNameAndProps()
   {
     console.log('recordEventWithNameAndProps');
-    this.clevertap.recordEventWithNameAndProps('Test Event with Properties', {
+    this.clevertap.recordEventWithNameAndProps('Test Event with Properties',
+      {
       'Property 1': 'First Prop',
       'Color of Text': 'Green'
     });
@@ -197,7 +198,7 @@ export class HomePage {
     console.log('eventGetDetails');
     this.clevertap.eventGetDetails('Test Event with Properties').then(r => {
       this.clickAlert('eventGetDetails',
-        'Details for \"Test Event with Properties\"', r)
+        'Details for \"Test Event with Properties\"', r.toString())
         .then(() => this.presentToast('eventGetDetails'));
     });
   }
@@ -484,6 +485,14 @@ export class HomePage {
     console.log('pushInstallReferrer');
     this.clevertap.pushInstallReferrer('Source Name', 'Medium Name', 'Campaign Name');
     this.presentToast('pushInstallReferrer');
+  }
+  infoInbox()
+  {
+    this.clickAlert('In-App Inbox',
+      '',
+      'These functions provide the capability to create App Inbox notifications for your users.' +
+      'You can use the App Inbox provided by CleverTap or create your own.' +
+      'You can design App Inbox notifications right from the dashboard.');
   }
   initializeInbox()
   {
@@ -816,9 +825,9 @@ export class HomePage {
   {
     console.log('getLong');
     this.clevertap.getLong().then(r => {
-      this.clickAlert('getLong', 'Long value found', r);
+      this.clickAlert('getLong', 'Long value found', r)
+        .then(() => this.presentToast('getLong'));
     });
-    this.presentToast('getLong');
   }
   getDouble()
   {
